@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.hecomi.ushadertemplate": {
+      "version": "https://github.com/hecomi/uShaderTemplate.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "0927b95a8bbe28c3b481ea5ff323a67d067b1a64"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: Deferred_SphereBoxMorph
   m_Shader: {fileID: 4800000, guid: 36acd277d50731f4294963d30204dd77, type: 3}
   m_ShaderKeywords: OBJECT_SHAPE_CUBE
@@ -18,12 +19,15 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
+    m_Ints: []
     m_Floats:
     - _Cull: 2
+    - _DistanceMultiplier: 1
     - _Glossiness: 0.796
     - _Loop: 50
     - _Metallic: 0
     - _MinDistance: 0.01
+    - _NormalDelta: 0.0001
     - _ShadowExtraBias: 0
     - _ShadowLoop: 10
     - _ShadowMinDistance: 0.01
@@ -33,3 +37,4 @@ Material:
     - _Emission: {r: 0, g: 0, b: 0, a: 0}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
     - _Specular: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []

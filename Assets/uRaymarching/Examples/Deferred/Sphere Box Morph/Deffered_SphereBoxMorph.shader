@@ -12,10 +12,10 @@ Properties
     [Enum(UnityEngine.Rendering.CullMode)] _Cull("Culling", Int) = 2
 
     [Header(Raymarching)]
-    _Loop("Loop", Range(1, 100)) = 30
+    _Loop("Loop", Range(1, 512)) = 30
     _MinDistance("Minimum Distance", Range(0.001, 0.1)) = 0.01
     _DistanceMultiplier("Distance Multiplier", Range(0.001, 2.0)) = 1.0
-    _ShadowLoop("Shadow Loop", Range(1, 100)) = 10
+    _ShadowLoop("Shadow Loop", Range(1, 256)) = 10
     _ShadowMinDistance("Shadow Minimum Distance", Range(0.001, 0.1)) = 0.01
     _ShadowExtraBias("Shadow Extra Bias", Range(0.0, 0.1)) = 0.01
     [PowerSlider(10.0)] _NormalDelta("NormalDelta", Range(0.00001, 0.1)) = 0.0001
@@ -62,13 +62,14 @@ inline float2 DistanceFunction(float3 pos)
         Repeat(pos, 0.2),
         0.1 - 0.1 * s,
         0.1 / length(pos * 2.0));
-    return float2(lerp(d1, d2, s), 0);
+    return float2(lerp(d1, d2, s), 1);
 }
 // @endblock
 
 // @block PostEffect
 inline void PostEffect(RaymarchInfo ray, inout PostEffectOutput o)
 {
+    o.Albedo *= float3(ray.id, 0, 0);
 }
 // @endblock
 
