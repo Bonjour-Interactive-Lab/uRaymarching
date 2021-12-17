@@ -49,10 +49,10 @@ CGINCLUDE
 #define POST_EFFECT PostEffect
 #define PostEffectOutput SurfaceOutputStandard
 
-#include "Assets\uRaymarching\Shaders\Include\Legacy/Common.cginc"
+#include "Assets\uRaymarching\Runtime\Shaders\Include\Legacy/Common.cginc"
 
 // @block DistanceFunction
-inline float DistanceFunction(float3 pos)
+inline float2 DistanceFunction(float3 pos)
 {
     float t = _Time.x;
     float a = 6 * PI * t;
@@ -62,7 +62,7 @@ inline float DistanceFunction(float3 pos)
         Repeat(pos, 0.2),
         0.1 - 0.1 * s,
         0.1 / length(pos * 2.0));
-    return lerp(d1, d2, s);
+    return float2(lerp(d1, d2, s), 0);
 }
 // @endblock
 
@@ -86,7 +86,7 @@ Pass
     }
 
     CGPROGRAM
-    #include "Assets\uRaymarching\Shaders\Include\Legacy/DeferredStandard.cginc"
+    #include "Assets\uRaymarching\Runtime\Shaders\Include\Legacy/DeferredStandard.cginc"
     #pragma target 3.0
     #pragma vertex Vert
     #pragma fragment Frag
@@ -101,7 +101,7 @@ Pass
     Tags { "LightMode" = "ShadowCaster" }
 
     CGPROGRAM
-    #include "Assets\uRaymarching\Shaders\Include\Legacy/ShadowCaster.cginc"
+    #include "Assets\uRaymarching\Runtime\Shaders\Include\Legacy/ShadowCaster.cginc"
     #pragma target 3.0
     #pragma vertex Vert
     #pragma fragment Frag

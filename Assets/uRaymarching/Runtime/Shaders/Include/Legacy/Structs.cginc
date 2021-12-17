@@ -26,6 +26,7 @@ struct RaymarchInfo
     // Output
     int loop;
     float3 endPos;
+    float id;
     float lastDistance;
     float totalLength;
     float depth;

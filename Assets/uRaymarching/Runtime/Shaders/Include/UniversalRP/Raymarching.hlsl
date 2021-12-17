@@ -7,14 +7,14 @@
 #include "./Structs.hlsl"
 
 #ifndef DISTANCE_FUNCTION
-inline float _DefaultDistanceFunction(float3 pos)
+inline float2 _DefaultDistanceFunction(float3 pos)
 {
-    return Box(pos, 1.0);
+    return float2(Box(pos, 1.0), 0);
 }
 #define DISTANCE_FUNCTION _DefaultDistanceFunction
 #endif
 
-inline float _DistanceFunction(float3 pos)
+inline float2 _DistanceFunction(float3 pos)
 {
 #ifdef WORLD_SPACE
     return DISTANCE_FUNCTION(pos);
@@ -33,9 +33,9 @@ inline float3 GetDistanceFunctionNormal(float3 pos)
 {
     const float d = _NormalDelta;
     return normalize(float3(
-        _DistanceFunction(pos + float3(  d, 0.0, 0.0)) - _DistanceFunction(pos),
-        _DistanceFunction(pos + float3(0.0,   d, 0.0)) - _DistanceFunction(pos),
-        _DistanceFunction(pos + float3(0.0, 0.0,   d)) - _DistanceFunction(pos)));
+        _DistanceFunction(pos + float3(  d, 0.0, 0.0)).x - _DistanceFunction(pos).x,
+        _DistanceFunction(pos + float3(0.0,   d, 0.0)).x - _DistanceFunction(pos).x,
+        _DistanceFunction(pos + float3(0.0, 0.0,   d)).x - _DistanceFunction(pos).x));
 }
 
 inline bool _ShouldRaymarchFinish(RaymarchInfo ray)
@@ -121,7 +121,9 @@ inline bool _Raymarch(inout RaymarchInfo ray)
 #endif
 
     for (ray.loop = 0; ray.loop < ray.maxLoop; ++ray.loop) {
-        ray.lastDistance = _DistanceFunction(ray.endPos) * multiplier;
+        float2 sdf = _DistanceFunction(ray.endPos);
+        ray.lastDistance = sdf.x * multiplier;
+        ray.id = sdf.y;
         ray.totalLength += ray.lastDistance;
         ray.endPos += ray.rayDir * ray.lastDistance;
         if (_ShouldRaymarchFinish(ray)) break;
